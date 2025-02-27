@@ -21,11 +21,11 @@ $(STOPPED) : $(CLEANED)
 
 # Step 3: Report frequency of words
 $(FREQS): $(STOPPED)
-	cat $< | YYY | sort -nr > $@
+	cat $< | tr ' ' '\n' | sort | uniq -c | sort -nr > $@
 
 # Step 4: Extract Top 10 most frequent words
 $(TOP_WORDS): $(FREQS)
-	gawk '$$2 && NR <=10 {print $$2}' $< > $@
+	gawk '$$2 && NR <=11 {print $$2}' $< > $@
 
 # Step 5: Generate table of word frequencies per paragraph
 $(TABLE): $(CLEANED) $(TOP_WORDS)
